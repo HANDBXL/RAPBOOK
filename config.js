@@ -1,44 +1,64 @@
 /**
  * Configuration des contenus par page
- * INDEX : L'ordre dans lequel vous avez ajouté les images dans le compilateur MindAR.
+ * INDEX : Correspond à l'ordre des images dans votre fichier .mind
  */
 
 const RAP_CONFIG = {
     0: {
-        title: "L'Âge d'Or",
-        artist: "90's Legend",
-        youtubeId: "WpYeekQkAdc",
-        lyrics: "C'est l'âge d'or du hip hop\nUn flow qui jamais ne s'arrête\nDe New York à Paris\nLa rime est une fête...",
-        isDoublePage: true,
-        contentOffset: { x: -1, y: 0, z: 0 } // Affichage sur la page de gauche
+        title: "IAM - Je danse le MIA",
+        artist: "Marseille Legend",
+        youtubeId: "7ceNf9qJjgc",
+        lyrics: "Tu es fada je crains dégun...",
+        contentOffset: { x: -0.7, y: 0, z: 0 }
     },
     1: {
-        title: "Je danse le MIA",
-        artist: "IAM",
-        youtubeId: "7ceNf9qJjgc",
-        lyrics: `Tu es fada je crains dégun, je vous prends tous ici, un par un
-Au début des années 80, je me souviens des soirées
-Où l'ambiance était chaude et les mecs rentraient
-Stan Smith aux pieds, le regard froid
-Ils scrutaient la salle le trois-quart en cuir roulé autour du bras
-Ray Ban sur la tête, survêtement Tacchini
-Pour les plus classes des mocassins Nébuloni
-Dès qu'ils passaient Cameo Midnight Star
-SOS Band Delegation ou Shalamar
-Tout le monde se levait, des cercles se formaient
-Des concours de danse un peu partout s'improvisaient
-Je te propose un voyage dans le temps, via planète Marseille
-Je danse le MIA
-Hey DJ, mets nous donc du Funk, que je danse le MIA
-Je danse le MIA
-J'ai poussé le Pioneer à fond pour danser le MIA
-Je danse le MIA
-Ce soir les bagues brilleront pour danser le MIA
-Je danse le MIA
-Hey DJ, mets nous donc du Funk, que je danse le MIA
-Je danse le MIA...`,
-        isDoublePage: true,
-        contentOffset: { x: -1, y: 0, z: 0 } // Affichage sur la page de gauche
+        title: "L'Âge d'Or",
+        artist: "Classique",
+        youtubeId: "WpYeekQkAdc",
+        lyrics: "C'est l'âge d'or du hip hop...",
+        contentOffset: { x: -0.7, y: 0, z: 0 }
+    },
+    2: {
+        title: "Nouvelle Page 3",
+        artist: "Artiste",
+        youtubeId: "", 
+        lyrics: "Paroles à venir...",
+        contentOffset: { x: -0.7, y: 0, z: 0 }
+    },
+    3: {
+        title: "Nouvelle Page 4",
+        artist: "Artiste",
+        youtubeId: "",
+        lyrics: "Paroles à venir...",
+        contentOffset: { x: -0.7, y: 0, z: 0 }
+    },
+    4: {
+        title: "Nouvelle Page 5",
+        artist: "Artiste",
+        youtubeId: "",
+        lyrics: "Paroles à venir...",
+        contentOffset: { x: -0.7, y: 0, z: 0 }
+    },
+    5: {
+        title: "Nouvelle Page 6",
+        artist: "Artiste",
+        youtubeId: "",
+        lyrics: "Paroles à venir...",
+        contentOffset: { x: -0.7, y: 0, z: 0 }
+    },
+    6: {
+        title: "Nouvelle Page 7",
+        artist: "Artiste",
+        youtubeId: "",
+        lyrics: "Paroles à venir...",
+        contentOffset: { x: -0.7, y: 0, z: 0 }
+    },
+    7: {
+        title: "Nouvelle Page 8",
+        artist: "Artiste",
+        youtubeId: "",
+        lyrics: "Paroles à venir...",
+        contentOffset: { x: -0.7, y: 0, z: 0 }
     }
 };
 
