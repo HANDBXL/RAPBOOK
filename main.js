@@ -39,27 +39,33 @@ document.addEventListener('DOMContentLoaded', () => {
         playIcon.setAttribute('position', '-0.03 0 0.01');
         playBtn.appendChild(playIcon);
 
-        // Texte Titre
+        // Titre - Ajout d'un fond pour la lisibilité
+        const titleBg = document.createElement('a-entity');
+        titleBg.setAttribute('geometry', 'primitive: plane; width: 0.8; height: 0.2');
+        titleBg.setAttribute('material', 'color: white; opacity: 0.8');
+        titleBg.setAttribute('position', '0 0.4 0');
+        
         const titleText = document.createElement('a-entity');
-        titleText.setAttribute('text', `value: ${config.title}; color: black; align: center; width: 2; font: https://cdn.aframe.io/fonts/Aileron-Semibold.fnt`);
-        titleText.setAttribute('position', '0 0.3 0');
+        titleText.setAttribute('text', `value: ${config.title}; color: #1a1a1a; align: center; width: 2.5`);
+        titleText.setAttribute('position', '0 0.4 0.01');
+        contentGroup.appendChild(titleBg);
         contentGroup.appendChild(titleText);
 
-        // Bouton Lyrics AR
+        // Bouton Lyrics AR - Amélioré
         const lyricsBtn = document.createElement('a-entity');
-        lyricsBtn.setAttribute('geometry', 'primitive: plane; width: 0.4; height: 0.15');
-        lyricsBtn.setAttribute('material', 'color: #1a1a1a; opacity: 0.8');
-        lyricsBtn.setAttribute('text', 'value: PAROLES; color: white; align: center; width: 1');
-        lyricsBtn.setAttribute('position', '0 -0.3 0');
+        lyricsBtn.setAttribute('geometry', 'primitive: plane; width: 0.5; height: 0.15');
+        lyricsBtn.setAttribute('material', 'color: #2196f3; opacity: 0.9');
+        lyricsBtn.setAttribute('text', 'value: VOIR LES PAROLES; color: white; align: center; width: 1.2');
+        lyricsBtn.setAttribute('position', '0 -0.4 0');
         lyricsBtn.setAttribute('class', 'clickable');
         contentGroup.appendChild(lyricsBtn);
 
         // GIF ou Image additionnelle
         if (config.gif) {
             const gifPlane = document.createElement('a-entity');
-            gifPlane.setAttribute('geometry', 'primitive: plane; width: 0.5; height: 0.5');
-            gifPlane.setAttribute('material', `src: ${config.gif}; transparent: true`);
-            gifPlane.setAttribute('position', '0.6 0.2 0');
+            gifPlane.setAttribute('geometry', 'primitive: plane; width: 0.4; height: 0.4');
+            gifPlane.setAttribute('material', `src: ${config.gif}; transparent: true; shader: flat`);
+            gifPlane.setAttribute('position', '0.66 0 0');
             contentGroup.appendChild(gifPlane);
         }
 
@@ -69,15 +75,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Evenements AR
         targetEntity.addEventListener('targetFound', () => {
-            console.log(`Target ${index} found`);
-            scanningScreen.classList.add('hidden');
+            console.log(`🎯 Cible détectée : ${index} (${config.title})`);
+            scanningScreen.style.opacity = '0';
+            setTimeout(() => scanningScreen.classList.add('hidden'), 500);
             currentTargetIndex = index;
         });
 
         targetEntity.addEventListener('targetLost', () => {
-            console.log(`Target ${index} lost`);
-            // On peut garder le contenu un peu si on veut, ou réafficher le scan
-            // scanningScreen.classList.remove('hidden');
+            console.log(`❌ Cible perdue : ${index}`);
+            // On peut choisir d'afficher à nouveau le scan après un délai
+            setTimeout(() => {
+                if (currentTargetIndex == index) {
+                    scanningScreen.classList.remove('hidden');
+                    scanningScreen.style.opacity = '1';
+                }
+            }, 2000);
         });
 
         // Clicks
