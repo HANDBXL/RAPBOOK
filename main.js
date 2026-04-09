@@ -21,53 +21,46 @@ document.addEventListener('DOMContentLoaded', () => {
         targetEntity.setAttribute('mindar-image-target', `targetIndex: ${index}`);
         targetEntity.id = `target-${index}`;
 
-        // Groupe pour le décalage (offset) si page blanche
+        // Groupe pour le décalage (offset) vers la page annexe
         const contentGroup = document.createElement('a-entity');
         contentGroup.setAttribute('position', `${config.contentOffset.x} ${config.contentOffset.y} ${config.contentOffset.z}`);
 
-        // Bouton Play AR (Cercle blanc avec icône)
+        // --- 3D UI REFINEMENT (Smaller, Premium) ---
+
+        // Bouton Play AR (Compact & Elegant)
         const playBtn = document.createElement('a-entity');
-        playBtn.setAttribute('geometry', 'primitive: circle; radius: 0.2');
-        playBtn.setAttribute('material', 'color: white; opacity: 0.9; transparent: true');
+        playBtn.setAttribute('geometry', 'primitive: circle; radius: 0.08');
+        playBtn.setAttribute('material', 'color: #ffffff; opacity: 0.95; transparent: true; shader: flat');
         playBtn.setAttribute('class', 'clickable');
-        playBtn.setAttribute('position', '0 0 0.1'); // Légèrement au-dessus de la page
+        playBtn.setAttribute('position', '0 0.1 0.1'); 
         
-        // Icône Play (Triangle noir)
         const playIcon = document.createElement('a-entity');
-        playIcon.setAttribute('geometry', 'primitive: triangle; vertexA: 0 0.08 0; vertexB: 0 -0.08 0; vertexC: 0.12 0 0');
-        playIcon.setAttribute('material', 'color: #2196f3');
-        playIcon.setAttribute('position', '-0.03 0 0.01');
+        playIcon.setAttribute('geometry', 'primitive: triangle; vertexA: 0 0.03 0; vertexB: 0 -0.03 0; vertexC: 0.05 0 0');
+        playIcon.setAttribute('material', 'color: #2196f3; shader: flat');
+        playIcon.setAttribute('position', '-0.015 0 0.01');
         playBtn.appendChild(playIcon);
 
-        // Titre - Ajout d'un fond pour la lisibilité
-        const titleBg = document.createElement('a-entity');
-        titleBg.setAttribute('geometry', 'primitive: plane; width: 0.8; height: 0.2');
-        titleBg.setAttribute('material', 'color: white; opacity: 0.8');
-        titleBg.setAttribute('position', '0 0.4 0');
-        
+        // Titre sur la page blanche
         const titleText = document.createElement('a-entity');
-        titleText.setAttribute('text', `value: ${config.title}; color: #1a1a1a; align: center; width: 2.5`);
-        titleText.setAttribute('position', '0 0.4 0.01');
-        contentGroup.appendChild(titleBg);
+        titleText.setAttribute('text', `value: ${config.title}\n${config.artist}; color: #1a1a1a; align: center; width: 1.5; font: https://cdn.aframe.io/fonts/Aileron-Semibold.fnt`);
+        titleText.setAttribute('position', '0 0.35 0');
         contentGroup.appendChild(titleText);
 
-        // Bouton Lyrics AR - Amélioré
+        // Bouton Paroles AR (Minimalist Pill Style)
         const lyricsBtn = document.createElement('a-entity');
-        lyricsBtn.setAttribute('geometry', 'primitive: plane; width: 0.5; height: 0.15');
-        lyricsBtn.setAttribute('material', 'color: #2196f3; opacity: 0.9');
-        lyricsBtn.setAttribute('text', 'value: VOIR LES PAROLES; color: white; align: center; width: 1.2');
-        lyricsBtn.setAttribute('position', '0 -0.4 0');
+        lyricsBtn.setAttribute('geometry', 'primitive: plane; width: 0.4; height: 0.12');
+        lyricsBtn.setAttribute('material', 'color: #1a1a1a; opacity: 0.85; transparent: true; shader: flat');
+        lyricsBtn.setAttribute('text', 'value: VOIR LES PAROLES; color: white; align: center; width: 0.8');
+        lyricsBtn.setAttribute('position', '0 -0.15 0');
         lyricsBtn.setAttribute('class', 'clickable');
         contentGroup.appendChild(lyricsBtn);
 
-        // GIF ou Image additionnelle
-        if (config.gif) {
-            const gifPlane = document.createElement('a-entity');
-            gifPlane.setAttribute('geometry', 'primitive: plane; width: 0.4; height: 0.4');
-            gifPlane.setAttribute('material', `src: ${config.gif}; transparent: true; shader: flat`);
-            gifPlane.setAttribute('position', '0.66 0 0');
-            contentGroup.appendChild(gifPlane);
-        }
+        // Ajout d'une ligne séparatrice élégante
+        const line = document.createElement('a-entity');
+        line.setAttribute('geometry', 'primitive: plane; width: 0.5; height: 0.005');
+        line.setAttribute('material', 'color: #2196f3; opacity: 0.5');
+        line.setAttribute('position', '0 0.25 0');
+        contentGroup.appendChild(line);
 
         contentGroup.appendChild(playBtn);
         targetEntity.appendChild(contentGroup);
@@ -75,24 +68,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Evenements AR
         targetEntity.addEventListener('targetFound', () => {
-            console.log(`🎯 Cible détectée : ${index} (${config.title})`);
+            console.log(`🎯 Found: ${config.title}`);
             scanningScreen.style.opacity = '0';
             setTimeout(() => scanningScreen.classList.add('hidden'), 500);
             currentTargetIndex = index;
         });
 
         targetEntity.addEventListener('targetLost', () => {
-            console.log(`❌ Cible perdue : ${index}`);
-            // On peut choisir d'afficher à nouveau le scan après un délai
             setTimeout(() => {
                 if (currentTargetIndex == index) {
                     scanningScreen.classList.remove('hidden');
                     scanningScreen.style.opacity = '1';
                 }
-            }, 2000);
+            }, 3000);
         });
 
-        // Clicks
         playBtn.addEventListener('click', () => openVideo(config.youtubeId));
         lyricsBtn.addEventListener('click', () => openLyrics(config));
     });
@@ -124,10 +114,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     closeVideoBtn.addEventListener('click', () => {
         videoOverlay.style.display = 'none';
-        youtubePlayerContainer.innerHTML = ''; // Arrête la vidéo
+        youtubePlayerContainer.innerHTML = ''; 
     });
 
-    // Tap sur le fond pour fermer les panels
     sceneEl.addEventListener('click', (e) => {
         if (e.target.nodeName === 'A-SCENE') {
             lyricsPanel.classList.remove('active');
