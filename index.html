@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR RAP - Le Livre Augmenté</title>
+    
+    <!-- A-Frame & MindAR -->
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <!-- UI Layer -->
+    <div id="ui-layer">
+        
+        <!-- Scanning Screen -->
+        <div id="scanning-screen" class="scanning-ui">
+            <div class="scanning-shimmer"></div>
+            <h1>Scanne ton livre</h1>
+            <p>Pointe ton appareil vers une illustration pour l'animer.</p>
+        </div>
+
+        <!-- Lyrics Panel -->
+        <div id="lyrics-panel">
+            <div class="panel-header">
+                <h2 id="lyrics-title">Paroles</h2>
+                <button class="close-btn" id="close-lyrics">×</button>
+            </div>
+            <div class="lyrics-content" id="lyrics-text">
+                Chargement...
+            </div>
+        </div>
+
+        <!-- Video Overlay -->
+        <div id="video-overlay">
+            <div class="video-container">
+                <button id="close-video" style="position: absolute; top: 10px; right: 10px; z-index: 10; padding: 10px; background: white; border: none; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-weight: bold;">×</button>
+                <div id="youtube-player"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- AR Scene -->
+    <!-- NB: imageTargetSrc pointera vers ton fichier .mind compilé -->
+    <a-scene 
+        mindar-image="imageTargetSrc: ./targets/targets.mind; filterMinCF:0.001; filterBeta:0.01;" 
+        color-space="sRGB" 
+        renderer="colorManagement: true, physicallyCorrectLights" 
+        vr-mode-ui="enabled: false" 
+        device-orientation-permission-ui="enabled: false"
+        embedded>
+        
+        <a-assets>
+            <!-- Placeholder for GIFs/Images if needed statically -->
+            <img id="btn-play-img" src="https://cdn-icons-png.flaticon.com/512/0/375.png">
+        </a-assets>
+
+        <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;" raycaster="far: 10000; objects: .clickable"></a-camera>
+
+        <!-- Les cibles seront générées dynamiquement par le script main.js -->
+        <!-- Mais on peut en définir une statiquement pour le test structurel -->
+        <a-entity id="ar-container"></a-entity>
+
+    </a-scene>
+
+    <script type="module" src="main.js"></script>
+</body>
+</html>
